@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myweb
+spec:
+  selector:
+    matchLabels:
+      app: myweb
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: myweb
+    spec:
+      imagePullSecrets:
+        - name: private-registry
+      containers:
+        - name: myweb
+          image: registry.devops.local/devops/jenkins-nginx
+          ports:
+            - containerPort: 80
