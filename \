@@ -9,7 +9,7 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh 'docker build -t meox73/jenkins-nginx:firstjenkins .'
+        sh 'docker build -t registry.devops.local/devops/jenkins-nginx .'
       }
     }
     stage('Login') {
@@ -19,13 +19,13 @@ pipeline {
     }
     stage('Push') {
       steps {
-        sh 'docker push meox73/jenkins-nginx:firstjenkins'
+        sh 'docker push registry.devops.local/devops/jenkins-nginx'
       }
     }
     stage('Deploy') {
             steps {
               script {
-                   sh "docker run --name=mywebapp1 -d -p 8084:80 jenkins-nginx:firstjenkins"
+                   sh "kubectl apply -f service.yml -f deployment.yml"
                 }
               }
             }
